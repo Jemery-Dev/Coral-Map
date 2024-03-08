@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "993841936315",
+    "project_id": "coral-map-91f5c",
+    "storage_bucket": "coral-map-91f5c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993841936315:android:a503206dd9d5a37b86f69e",
+        "android_client_info": {
+          "package_name": "com.example.coralmap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDylbE3CSJrBVRNhsjK7EQLeS_b0sM-Als"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
