@@ -12,14 +12,16 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.coralmap.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_map"
+        android:name="com.example.coralmap.ui.carte.MapsActivity"
+        android:label="Maps"
+        tools:layout="@layout/fragment_map" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.coralmap.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <action android:id="@+id/action_global_navigation_dashboard" app:destination="@id/navigation_map"/>
 </navigation>

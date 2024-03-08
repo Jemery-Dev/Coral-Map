@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:text="HOOMEEE"
         tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="157dp" />
+        tools:layout_editor_absoluteY="157dp"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
