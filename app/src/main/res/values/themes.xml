@@ -13,4 +13,8 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    
+    <style name="NomAppli">
+        <item name="android:fontFamily">@font/LuckiestGuy-Regular</item>
+    </style>
 </resources>
