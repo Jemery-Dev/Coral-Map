@@ -32,7 +32,7 @@ import java.util.Objects;
 public class Registration extends AppCompatActivity implements
         View.OnClickListener
 {
-    private static final String TAG = "RegisterActivity";
+    private static final String TAG = "Registration";
 
     //widgets
     private EditText mEmail, mPassword, mConfirmPassword;
@@ -63,58 +63,59 @@ public class Registration extends AppCompatActivity implements
      * @param email
      * @param password
      */
-    public void registerNewEmail(final String email, String password){
-
+    public void registerNewEmail(final String email, String password) {
         showDialog();
 
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+        try {
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                        if (task.isSuccessful()){
-                            Log.d(TAG, "onComplete: AuthState: " + FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "onComplete: AuthState: " + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                            //insert some default data
-                            Utilisateur user = new Utilisateur();
-                            user.setEmail(email);
-                            user.setUsername(email.substring(0, email.indexOf("@")));
-                            user.setUser_id(FirebaseAuth.getInstance().getUid());
+                                Utilisateur user = new Utilisateur();
+                                user.setEmail(email);
+                                user.setUsername(email.substring(0, email.indexOf("@")));
+                                user.setUser_id(FirebaseAuth.getInstance().getUid());
 
-                            FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                                    .setPersistenceEnabled(true)
-                                    .build();
-                            mDb.setFirestoreSettings(settings);
+                                FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                                        .setPersistenceEnabled(true)
+                                        .build();
+                                mDb.setFirestoreSettings(settings);
 
-                            DocumentReference newUserRef = mDb
-                                    .collection(getString(R.string.collection_users))
-                                    .document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
+                                DocumentReference newUserRef = mDb
+                                        .collection(getString(R.string.collection_users))
+                                        .document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
 
-                            newUserRef.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    hideDialog();
+                                newUserRef.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        hideDialog();
 
-                                    if(task.isSuccessful()){
-                                        redirectLoginScreen();
-                                    }else{
-                                        View parentLayout = findViewById(android.R.id.content);
-                                        Snackbar.make(parentLayout, "Something went wrong.", Snackbar.LENGTH_SHORT).show();
+                                        if (task.isSuccessful()) {
+                                            redirectLoginScreen();
+                                        } else {
+                                            View parentLayout = findViewById(android.R.id.content);
+                                            Snackbar.make(parentLayout, "Something went wrong.", Snackbar.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            });
+                                });
 
+                            } else {
+                                View parentLayout = findViewById(android.R.id.content);
+                                Snackbar.make(parentLayout, "Something went wrong.", Snackbar.LENGTH_SHORT).show();
+                                hideDialog();
+                            }
                         }
-                        else {
-                            View parentLayout = findViewById(android.R.id.content);
-                            Snackbar.make(parentLayout, "Something went wrong.", Snackbar.LENGTH_SHORT).show();
-                            hideDialog();
-                        }
-
-                        // ...
-                    }
-                });
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(Registration.this, "An error occurred: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            hideDialog();
+        }
     }
 
     /**
