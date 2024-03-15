@@ -5,4 +5,11 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_carte">CarteActivity</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="sign_in">sign_in</string>
+    <string name="password">password</string>
+    <string name="prompt_email">prompt_email</string>
+    <string name="register">register</string>
+    <string name="confirm_password">confirm_password</string>
+    <string name="email_registration">email_registration</string>
+    <string name="collection_users">users</string>
 </resources>

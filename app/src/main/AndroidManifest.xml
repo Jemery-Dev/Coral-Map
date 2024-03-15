@@ -16,24 +16,28 @@
         android:theme="@style/Theme.CoralMap"
         tools:targetApi="31">
 
-        <activity android:name=".MainActivity"
+
+        <activity android:name=".ui.Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.Registration"
+            android:exported="true">
+        </activity>
+
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${apiKey}" />
+            android:value="AIzaSyA8pybYUK-KS_IHaWG66JIp7tjKFR4jiTI" />
 
         <activity
             android:name=".ui.carte.MapsActivity"
             android:exported="true"
             android:label="@string/title_activity_maps">
-
         </activity>
     </application>
 
