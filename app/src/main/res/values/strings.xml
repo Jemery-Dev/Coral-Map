@@ -12,12 +12,4 @@
     <string name="confirm_password">confirm_password</string>
     <string name="email_registration">email_registration</string>
     <string name="collection_users">users</string>
-    <string name="se_connecter">Se connecter</string>
-    <string name="adresse_mail">Adresse mail</string>
-    <string name="mot_de_passe">Mot de passe</string>
-    <string name="tu_n_as_pas_de_compte_inscrits_toi">Tu n\'as pas de compte ? Inscrits toi</string>
-    <string name="connexion">Connexion</string>
-    <string name="inscription">Inscription</string>
-    <string name="confirmation_mot_de_passe">Confirmation mot de passe</string>
-    <string name="s_inscrire">S\'inscrire</string>
 </resources>

@@ -35,7 +35,7 @@ public class Registration extends AppCompatActivity implements
     private static final String TAG = "Registration";
 
     //widgets
-    private EditText mEmail, mUsername, mPassword, mConfirmPassword;
+    private EditText mEmail, mPassword, mConfirmPassword;
     private ProgressBar mProgressBar;
 
     //vars
@@ -47,7 +47,6 @@ public class Registration extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         mEmail = (EditText) findViewById(R.id.input_email);
-        mUsername = (EditText) findViewById(R.id.input_username);
         mPassword = (EditText) findViewById(R.id.input_password);
         mConfirmPassword = (EditText) findViewById(R.id.input_confirm_password);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -79,7 +78,7 @@ public class Registration extends AppCompatActivity implements
 
                                 Utilisateur user = new Utilisateur();
                                 user.setEmail(email);
-                                user.setUsername(mUsername.getText().toString());
+                                user.setUsername(email.substring(0, email.indexOf("@")));
                                 user.setUser_id(FirebaseAuth.getInstance().getUid());
 
                                 FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
