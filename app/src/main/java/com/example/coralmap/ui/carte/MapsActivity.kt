@@ -83,20 +83,24 @@ class MapsActivity : Fragment(), OnMapReadyCallback {
             .addOnSuccessListener { location: Location? ->
                 location?.let {
                     val currentUser = FirebaseAuth.getInstance().currentUser
-                    val utilisateur = Utilisateur(
-                        currentUser?.email ?: "",
-                        currentUser?.uid ?: "",
-                        currentUser?.displayName ?: "",
-                        ""
-                    )
+                    val userId = currentUser?.uid ?: ""
 
-                    val userLocation = UtilisateurLocation(
-                        GeoPoint(location.latitude, location.longitude),
-                        Date(),
-                        utilisateur
-                    )
+                    fetchUserDetails(userId) { username, avatar ->
+                        val utilisateur = Utilisateur(
+                            currentUser?.email ?: "",
+                            currentUser?.uid ?: "",
+                            username ?: "PAS DE PSEUDO",
+                            avatar ?: ""
+                        )
 
-                    saveUserLocationToFirebase(userLocation);
+                        val userLocation = UtilisateurLocation(
+                            GeoPoint(location.latitude, location.longitude),
+                            Date(),
+                            utilisateur
+                        )
+
+                        saveUserLocationToFirebase(userLocation);
+                    }
                 }
             }
     }
@@ -153,16 +157,52 @@ class MapsActivity : Fragment(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(userLatLng).title(userLocation.user.username))
     }
 
-    private fun updateMarkerForUser(userLocation: UtilisateurLocation) {
-        val userLatLng = LatLng(userLocation.geo_point.latitude, userLocation.geo_point.longitude)
-        if (markers.containsKey(userLocation.user.user_id)) {
-            markers[userLocation.user.user_id]?.position = userLatLng
-        } else {
-            val marker = mMap.addMarker(MarkerOptions().position(userLatLng).title(userLocation.user.username))
-            markers[userLocation.user.user_id] = marker ?: return
+    private fun fetchUserDetails(userId: String, callback: (username: String?, avatar: String?) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("users")
+            .document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val utilisateur = document.toObject(Utilisateur::class.java)
+                    callback(utilisateur?.username, utilisateur?.avatar)
+                } else {
+                    callback(null, null)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e(TAG, "Error fetching user details", exception)
+                callback(null, null)
+            }
+    }
 
+
+    private fun updateMarkerForUser(userLocation: UtilisateurLocation) {
+        val user = userLocation.user
+        if (user != null) {
+            val username = user.getUsername()
+            if (username != null) {
+                val geoPoint = userLocation.geo_point
+                if (geoPoint != null) {
+                    val userLatLng = LatLng(geoPoint.latitude, geoPoint.longitude)
+                    if (markers.containsKey(user.user_id)) {
+                        markers[user.user_id]?.position = userLatLng
+                    } else {
+                        val marker = mMap.addMarker(MarkerOptions().position(userLatLng).title(username))
+                        markers[user.user_id] = marker ?: return
+                    }
+                } else {
+                    Log.e(TAG, "GeoPoint is null for user: $username")
+                }
+            } else {
+                Log.e(TAG, "Username is null for userLocation: $userLocation")
+            }
+        } else {
+            Log.e(TAG, "User is null for userLocation: $userLocation")
         }
     }
+
+
 
     //Pour fetch toutes les 5 minutes
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
