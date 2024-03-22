@@ -3,11 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradientbackground"
     >
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="150dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -22,9 +24,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/email_registration"
-                    android:textSize="25sp"
-                    android:textColor="@color/black"
+                    android:text="@string/inscription"
+                    android:textSize="34sp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
                     android:id="@+id/textEmailReg"/>
@@ -35,8 +36,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
+                    android:padding="6dp"
+                    android:background="@drawable/edit_text_background"
                     android:inputType="textEmailAddress"
-                    android:hint="@string/prompt_email"
+                    android:hint="@string/adresse_mail"
+                    android:layout_below="@+id/textEmailReg"/>
+
+
+                <EditText
+                    android:id="@+id/input_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="6dp"
+                    android:layout_marginTop="80dp"
+                    android:background="@drawable/edit_text_background"
+                    android:inputType="textEmailAddress"
+                    android:hint="Pseudo"
                     android:layout_below="@+id/textEmailReg"/>
 
 
@@ -44,9 +59,11 @@
                     android:id="@+id/input_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="70dp"
+                    android:padding="6dp"
                     android:inputType="textPassword"
-                    android:hint="@string/password"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="@string/mot_de_passe"
                     android:layout_below="@+id/input_email"/>
 
                 <EditText
@@ -55,7 +72,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:inputType="textPassword"
-                    android:hint="@string/confirm_password"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="6dp"
+                    android:hint="@string/confirmation_mot_de_passe"
                     android:layout_below="@+id/input_password"/>
 
 
@@ -65,8 +84,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="35dp"
                     android:layout_below="@+id/input_confirm_password"
-                    android:text="@string/register"
-                    android:background="@color/common_google_signin_btn_text_light_pressed"/>
+                    android:text="@string/s_inscrire"
+                    android:layout_marginHorizontal="50dp"
+                    android:background="@drawable/button_background"/>
 
 
             </RelativeLayout>
